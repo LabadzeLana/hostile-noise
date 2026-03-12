@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HOSTILE NOISE — Friction in Design, Art and Technology</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Barlow+Condensed:wght@300;400;600&display=swap"
+    rel="stylesheet">
+  <link rel="icon" type="image/png" href="favicon.png">
+
+  <!-- Social Sharing Meta Tags -->
+  <meta property="og:title" content="HOSTILE NOISE — Friction in Design, Art and Technology">
+  <meta property="og:description"
+    content="An exploration of friction in Design, Art and Technology. 18 April 2026, Rooms, Tbilisi.">
+  <meta property="og:image" content="og-image.png">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="HOSTILE NOISE — Friction in Design, Art and Technology">
+  <meta name="twitter:description"
+    content="An exploration of friction in Design, Art and Technology. 18 April 2026, Rooms, Tbilisi.">
+  <meta name="twitter:image" content="og-image.png">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #f0ede8;
+      --red: #f1ee75;
+      --gray: #2a2a2a;
+      --mid: #5a5a5a;
+      --light: #b0aa9f;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Space Mono', monospace;
+      overflow-x: hidden;
+      cursor: crosshair;
+    }
+
+    /* NOISE OVERLAY */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.04;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* SCANLINES */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(0deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 0, 0, 0.03) 2px,
+          rgba(0, 0, 0, 0.03) 4px);
+      pointer-events: none;
+      z-index: 9998;
+    }
+
+    /* ─── HEADER / HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--gray);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(241, 238, 117, 0.06) 0%, transparent 60%),
+        linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.8) 100%);
+      z-index: 0;
+    }
+
+    /* Animated interference lines */
+    .interference {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .interference svg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0.12;
+    }
+
+    .interference line {
+      stroke: var(--white);
+      stroke-width: 0.5;
+      animation: drift 12s ease-in-out infinite alternate;
+    }
+
+    .interference line:nth-child(even) {
+      animation-duration: 9s;
+      animation-delay: -3s;
+    }
+
+    @keyframes drift {
+      from {
+        transform: translateX(-10px) rotate(0deg);
+      }
+
+      to {
+        transform: translateX(10px) rotate(1deg);
+      }
+    }
+
+    .nav {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 3rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .nav-logos {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .logo-adjara {
+      height: 42px;
+      width: auto;
+      filter: invert(1) brightness(0.7);
+      opacity: 0.85;
+      transition: opacity 0.2s ease;
+    }
+
+    .logo-adjara:hover {
+      opacity: 1;
+    }
+
+    .logo-geolab {
+      height: 54px;
+      width: auto;
+      filter: brightness(0.7);
+      opacity: 0.85;
+      transition: opacity 0.2s ease;
+    }
+
+    .logo-geolab:hover {
+      opacity: 1;
+    }
+
+    .footer-logo-adjara {
+      height: 46px;
+      width: auto;
+      filter: invert(1) brightness(0.5);
+      opacity: 0.6;
+      transition: opacity 0.2s ease;
+    }
+
+    .footer-logo-adjara:hover {
+      opacity: 0.9;
+    }
+
+    .footer-logo-geolab {
+      height: 60px;
+      width: auto;
+      filter: brightness(0.5);
+      opacity: 0.6;
+      transition: opacity 0.2s ease;
+    }
+
+    .footer-logo-geolab:hover {
+      opacity: 0.9;
+    }
+
+    .footer-orgs {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .nav-date {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--mid);
+      text-align: right;
+      line-height: 1.8;
+    }
+
+    .nav-date span {
+      display: block;
+      color: var(--red);
+      font-weight: 700;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 3rem;
+    }
+
+    .hero-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.2s;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 18vw, 18rem);
+      line-height: 0.88;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.4s;
+      position: relative;
+    }
+
+    .hero-title .glitch {
+      position: relative;
+      display: inline-block;
+    }
+
+    .hero-title .glitch::before,
+    .hero-title .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+
+    .hero-title .glitch::before {
+      color: var(--red);
+      clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%);
+      transform: translateX(-3px);
+      animation: glitch1 4s infinite;
+    }
+
+    .hero-title .glitch::after {
+      color: rgba(100, 200, 255, 0.3);
+      clip-path: polygon(0 60%, 100% 60%, 100% 75%, 0 75%);
+      transform: translateX(3px);
+      animation: glitch2 4s infinite 0.5s;
+    }
+
+    @keyframes glitch1 {
+
+      0%,
+      90%,
+      100% {
+        opacity: 0;
+        transform: translateX(-3px);
+      }
+
+      91% {
+        opacity: 1;
+        transform: translateX(-6px);
+      }
+
+      93% {
+        opacity: 0;
+      }
+
+      95% {
+        opacity: 1;
+        transform: translateX(4px);
+      }
+
+      97% {
+        opacity: 0;
+      }
+    }
+
+    @keyframes glitch2 {
+
+      0%,
+      88%,
+      100% {
+        opacity: 0;
+      }
+
+      89% {
+        opacity: 1;
+        transform: translateX(6px);
+      }
+
+      91% {
+        opacity: 0;
+      }
+
+      94% {
+        opacity: 1;
+        transform: translateX(-4px);
+      }
+
+      96% {
+        opacity: 0;
+      }
+    }
+
+    .hero-subtitle {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(1rem, 2.5vw, 1.6rem);
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      color: var(--light);
+      margin-top: 1.5rem;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.6s;
+    }
+
+    .hero-bottom {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 2rem 3rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.9s;
+    }
+
+    .hero-meta {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--mid);
+      line-height: 2;
+    }
+
+    .hero-meta strong {
+      color: var(--white);
+      display: block;
+    }
+
+    .btn-register {
+      display: inline-block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.35em;
+      color: var(--black);
+      background: var(--white);
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    }
+
+    .btn-register::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--red);
+      transform: translateX(-102%);
+      transition: transform 0.3s ease;
+    }
+
+    .btn-register span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-register:hover {
+      color: var(--black);
+    }
+
+    .btn-register:hover::before {
+      transform: translateX(0);
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ─── CONCEPT SECTION ─── */
+    .concept {
+      padding: 8rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 6rem;
+      border-bottom: 1px solid var(--gray);
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.4em;
+      color: var(--red);
+      text-transform: uppercase;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      align-self: start;
+      padding-top: 0.5rem;
+    }
+
+    .concept-text p {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--light);
+      margin-bottom: 1.5rem;
+    }
+
+    .concept-text p strong {
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    .concept-manifesto {
+      margin-top: 3rem;
+      padding: 2rem;
+      border-left: 2px solid var(--gray);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .concept-manifesto p {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      line-height: 2;
+      color: var(--mid);
+      font-style: italic;
+    }
+
+    /* ─── EVENT INFO ─── */
+    .event-info {
+      background: var(--gray);
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-bottom: 1px solid #333;
+    }
+
+    .info-block {
+      padding: 4rem 3rem;
+      border-right: 1px solid #333;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .info-block:last-child {
+      border-right: none;
+    }
+
+    .info-block::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--red);
+      transition: width 0.4s ease;
+    }
+
+    .info-block:hover::after {
+      width: 100%;
+    }
+
+    .info-block .label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.4em;
+      color: var(--mid);
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+
+    .info-block .value {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      color: var(--white);
+      line-height: 1.1;
+      letter-spacing: 0.05em;
+    }
+
+    .info-block .sub {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.85rem;
+      color: var(--mid);
+      margin-top: 0.6rem;
+      letter-spacing: 0.1em;
+    }
+
+    /* ─── PARTICIPANTS ─── */
+    .participants-section {
+      padding: 8rem 3rem;
+      border-bottom: 1px solid var(--gray);
+    }
+
+    .participants-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 5rem;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 5vw, 4rem);
+      letter-spacing: 0.05em;
+      color: var(--white);
+    }
+
+    .participants-count {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--mid);
+      letter-spacing: 0.2em;
+    }
+
+    .participants-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1px;
+      background: var(--gray);
+    }
+
+    .participant-card {
+      background: var(--black);
+      padding: 2rem;
+      transition: background 0.2s ease;
+      cursor: pointer;
+      position: relative;
+      text-decoration: none;
+      display: block;
+      color: inherit;
+    }
+
+    .participant-card:hover {
+      background: #111;
+    }
+
+    .participant-card:hover .participant-name {
+      color: var(--white);
+    }
+
+    .participant-country {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.35em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .participant-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.05em;
+      color: var(--light);
+      line-height: 1.1;
+      transition: color 0.2s ease;
+    }
+
+    .participant-role {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      color: var(--mid);
+      margin-top: 0.5rem;
+      letter-spacing: 0.1em;
+      line-height: 1.4;
+    }
+
+    /* ─── REGISTER CTA ─── */
+    .register-section {
+      padding: 10rem 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--gray);
+    }
+
+    .register-section::before {
+      content: 'REGISTER';
+      position: absolute;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 30vw;
+      color: rgba(255, 255, 255, 0.02);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+
+    .register-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      color: var(--mid);
+      margin-bottom: 2rem;
+    }
+
+    .register-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      color: var(--white);
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+
+    .register-sub {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem;
+      color: var(--mid);
+      letter-spacing: 0.2em;
+      margin-bottom: 4rem;
+    }
+
+    .btn-register-large {
+      display: inline-block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.35em;
+      color: var(--black);
+      background: var(--white);
+      padding: 1.4rem 5rem;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+      clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+    }
+
+    .btn-register-large::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--red);
+      transform: translateX(-102%);
+      transition: transform 0.35s ease;
+    }
+
+    .btn-register-large span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-register-large:hover {
+      color: var(--black);
+    }
+
+    .btn-register-large:hover::before {
+      transform: translateX(0);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--gray);
+    }
+
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.2em;
+      color: var(--white);
+    }
+
+    .footer-credit {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--mid);
+      letter-spacing: 0.15em;
+      text-align: right;
+      line-height: 2;
+    }
+
+    .footer-contact {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--light);
+      margin-top: 1rem;
+    }
+
+    .footer-contact a {
+      color: var(--red);
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .footer-contact a:hover {
+      opacity: 0.8;
+    }
+
+
+
+
+
+    /* ─── PHOTO GRID ─── */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-bottom: 2px;
+    }
+
+    .photo-card {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 3 / 4;
+      background: var(--gray);
+      display: block;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      filter: grayscale(30%) contrast(1.05);
+      transition: transform 0.5s ease, filter 0.4s ease;
+      display: block;
+    }
+
+    .photo-card:hover img {
+      transform: scale(1.04);
+      filter: grayscale(0%) contrast(1.1);
+    }
+
+    .photo-card-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem 1.5rem 1.5rem;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .photo-card:hover .photo-card-overlay {
+      opacity: 1;
+    }
+
+    .photo-card-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      color: var(--white);
+      line-height: 1.1;
+    }
+
+    .photo-card-country {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.3em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+
+    .photo-card-role {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      color: var(--light);
+      margin-top: 0.3rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .nav {
+        padding: 1.5rem;
+      }
+
+      .hero-content {
+        padding: 3rem 1.5rem;
+      }
+
+      .hero-bottom {
+        flex-direction: column;
+        gap: 2rem;
+        padding: 2rem 1.5rem;
+        align-items: flex-start;
+      }
+
+      .concept {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 4rem 1.5rem;
+      }
+
+      .section-tag {
+        writing-mode: horizontal-tb;
+        transform: none;
+      }
+
+      .event-info {
+        grid-template-columns: 1fr;
+      }
+
+      .info-block {
+        border-right: none;
+        border-bottom: 1px solid #333;
+      }
+
+      .photo-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .participants-section {
+        padding: 4rem 1.5rem;
+      }
+
+      .participants-header {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .register-section {
+        padding: 6rem 1.5rem;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 2rem;
+        text-align: center;
+      }
+
+      .footer-credit {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="interference">
+      <svg viewBox="0 0 1400 900" preserveAspectRatio="none">
+        <line x1="0" y1="120" x2="1400" y2="350" />
+        <line x1="200" y1="0" x2="600" y2="900" />
+        <line x1="800" y1="0" x2="400" y2="900" />
+        <line x1="1100" y1="80" x2="300" y2="500" />
+        <line x1="0" y1="600" x2="1400" y2="200" />
+        <line x1="700" y1="0" x2="900" y2="900" />
+        <line x1="1300" y1="0" x2="100" y2="900" />
+        <line x1="0" y1="400" x2="1400" y2="700" />
+        <line x1="500" y1="0" x2="500" y2="900" />
+        <line x1="1200" y1="300" x2="0" y2="800" />
+      </svg>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-logos">
+        <a href="https://adjaragroup.com/" target="_blank"><img src="Adjara-Group.logo.png" alt="Adjara Group"
+            class="logo-adjara"></a>
+        <a href="https://www.facebook.com/GeoLabEdu" target="_blank"><img src="GeoLab.logo.png" alt="GeoLab"
+            class="logo-geolab"></a>
+      </div>
+      <div class="nav-date">
+        <span>18 April 2026</span>
+        Rooms, 14 Merab Kostava St.<br>
+        Full-Day Programme
+      </div>
+    </nav>
+
+    <div class="hero-content">
+      <div class="hero-label">Friction in Design, Art and Technology</div>
+      <h1 class="hero-title">
+        <span class="glitch" data-text="HOSTILE">HOSTILE</span><br>
+        <span class="glitch" data-text="NOISE">NOISE</span>
+      </h1>
+      <p class="hero-subtitle">An Interdisciplinary Festival of Collision</p>
+    </div>
+
+    <div class="hero-bottom">
+      <div class="hero-meta">
+        <strong>Curated by</strong>
+        Sandro Asatiani / Karl Stocker
+      </div>
+      <div class="hero-meta" style="text-align:center;">
+        <strong>Location</strong>
+        Rooms, 14 Merab Kostava Street
+      </div>
+      <a href="https://forms.gle/rCoKhm8GVKXGrzKG6" target="_blank" class="btn-register">
+        <span>Register Now →</span>
+      </a>
+    </div>
+  </section>
+
+
+
+  <!-- CONCEPT -->
+  <section class="concept">
+    <div class="section-tag">Concept</div>
+    <div class="concept-text">
+      <p>For the past two years, an <strong>interdisciplinary group</strong> has been exploring how to weave together an
+        undisciplined mesh of Design, Art, and Technology — spanning countries, institutions, and generations,
+        consistently framed through the lens of media art.</p>
+      <p>It connects a new English-language PhD programme in Tbilisi with a festival and exhibition format that opens up
+        artistic research beyond the academic sphere and <strong>into the public realm</strong>.</p>
+      <p>From street art to sound and memorial art to immersive projections — all opening up space for reflection on
+        <strong>memory, power, technology, and perception</strong>.
+      </p>
+      <div class="concept-manifesto">
+        <p>HOSTILE NOISE exists in the tension, the clash, the interference. It thrives where art, design, and
+          technology collide — deliberately generating friction, disruption, and critical reflection. We reject
+          neutrality, comfort, and institutional smoothness. Knowledge is never pure; media is never innocent;
+          perception is never passive.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVENT INFO -->
+  <div class="event-info">
+    <div class="info-block">
+      <div class="label">Date</div>
+      <div class="value">18 APR<br>2026</div>
+      <div class="sub">Full-Day Programme</div>
+    </div>
+    <div class="info-block">
+      <div class="label">Venue</div>
+      <div class="value">Rooms</div>
+      <div class="sub">14 Merab Kostava Street, Tbilisi</div>
+    </div>
+    <div class="info-block">
+      <div class="label">Participants</div>
+      <div class="value">24<br>Artists</div>
+      <div class="sub">8 Countries Represented</div>
+    </div>
+  </div>
+
+  <!-- PARTICIPANTS -->
+  <section class="participants-section">
+    <div class="participants-header">
+      <h2 class="section-title">Participants</h2>
+      <div class="participants-count">// 24 contributors</div>
+    </div>
+
+    <!-- PHOTO GRID -->
+    <div class="photo-grid">
+
+      <a href="p_sandro_asatiani.html" target="_blank" class="photo-card">
+        <img src="Participant photos/SandroAsatiani.jpeg" alt="Sandro Asatiani">
+        <div class="photo-card-overlay">
+          <div class="photo-card-country">GE — Georgia</div>
+          <div class="photo-card-name">Sandro Asatiani</div>
+          <div class="photo-card-role">Artist, Educator &amp; Technologist</div>
+        </div>
+      </a>
+
+      <a href="p_tomislav_bobinec.html" target="_blank" class="photo-card">
+        <img src="Participant photos/Tomislav.jpeg" alt="Tomislav Bobinec">
+        <div class="photo-card-overlay">
+          <div class="photo-card-country">AT — Austria</div>
+          <div class="photo-card-name">Tomislav Bobinec</div>
+          <div class="photo-card-role">Designer &amp; Lecturer, FH Joanneum Graz</div>
+        </div>
+      </a>
+
+      <a href="p_angus_campbell.html" target="_blank" class="photo-card">
+        <img src="Participant photos/Angus Donald Campbel.jpeg" alt="Angus Donald Campbell">
+        <div class="photo-card-overlay">
+          <div class="photo-card-country">HK — Hong Kong</div>
+          <div class="photo-card-name">Angus Donald Campbell</div>
+          <div class="photo-card-role">Designer &amp; Researcher</div>
+        </div>
+      </a>
+
+      <a href="p_katharina_diem.html" target="_blank" class="photo-card">
+        <img src="Participant photos/Katharina.jpeg" alt="Katharina Diem">
+        <div class="photo-card-overlay">
+          <div class="photo-card-country">AT — Austria</div>
+          <div class="photo-card-name">Katharina Diem</div>
+          <div class="photo-card-role">Designer &amp; Intuitive Explorer</div>
+        </div>
+      </a>
+
+      <a href="p_astrid_drechsler.html" target="_blank" class="photo-card">
+        <img src="Participant photos/Astrid Drechsler_credit_Mario_Weise.jpeg" alt="Astrid Drechsler">
+        <div class="photo-card-overlay">
+          <div class="photo-card-country">AT — Austria</div>
+          <div class="photo-card-name">Astrid Drechsler</div>
+          <div class="photo-card-role">Sound Designer &amp; Senior Lecturer</div>
+        </div>
+      </a>
+
+      <a href="p_nino_esaiashvili.html" target="_blank" class="photo-card">
+        <img src="Participant photos/NinoEsiashvili.jpeg" alt="Nino Esaiashvili">
+        <div class="photo-card-overlay">
+          <div class="photo-card-country">GE — Georgia</div>
+          <div class="photo-card-name">Nino Esaiashvili</div>
+          <div class="photo-card-role">Graphic Designer &amp; Media Art PhD Candidate</div>
+        </div>
+      </a>
+
+      <a href="p_feelipa.html" target="_blank" class="photo-card">
+        <img src="Participant photos/Feelipa.jpeg" alt="Feelipa">
+        <div class="photo-card-overlay">
+          <div class="photo-card-country">AT — Austria</div>
+          <div class="photo-card-name">Feelipa</div>
+          <div class="photo-card-role">Music Programmer &amp; DJ</div>
+        </div>
+      </a>
+
+      <a href="p_gagosh.html" target="_blank" class="photo-card">
+        <img src="Participant photos/Gagosh_00.jpeg" alt="Gagosh Streetart">
+        <div class="photo-card-overlay">
+          <div class="photo-card-country">GE — Georgia</div>
+          <div class="photo-card-name">Gagosh Streetart</div>
+          <div class="photo-card-role">Street Artist &amp; Urban Interventionist</div>
+        </div>
+      </a>
+
+      <a href="p_maria_vidal.html" target="_blank" class="photo-card">
+        <img src="Participant photos/mariagomar_muro_paterna.jpeg" alt="María Amparo Gomar Vidal">
+        <div class="photo-card-overlay">
+          <div class="photo-card-country">ES — Spain</div>
+          <div class="photo-card-name">María Amparo Gomar Vidal</div>
+          <div class="photo-card-role">Artist — Memory, Gender &amp; Identity</div>
+        </div>
+      </a>
+
+      <a href="p_kristina_gorke.html" target="_blank" class="photo-card">
+        <img src="Participant photos/Kristina_Gorke.jpeg" alt="Kristina Gorke">
+        <div class="photo-card-overlay">
+          <div class="photo-card-country">AT — Austria</div>
+          <div class="photo-card-name">Kristina Gorke</div>
+          <div class="photo-card-role">Singer &amp; Performance Artist</div>
+        </div>
+      </a>
+
+      <a href="p_bernd_gutmannsbauer.html" target="_blank" class="photo-card">
+        <img src="Participant photos/Bernd Gutmannsbauer.jpeg" alt="Bernd Gutmannsbauer">
+        <div class="photo-card-overlay">
+          <div class="photo-card-country">AT — Austria</div>
+          <div class="photo-card-name">Dr. Bernd Gutmannsbauer</div>
+          <div class="photo-card-role">Philosopher, Musician &amp; Curator</div>
+        </div>
+      </a>
+
+      <a href="p_reni_hofmuller.html" target="_blank" class="photo-card">
+        <img src="Participant photos/Reni_Hofmueller.jpeg" alt="Reni Hofmüller">
+        <div class="photo-card-overlay">
+          <div class="photo-card-country">AT — Austria</div>
+          <div class="photo-card-name">Reni Hofmüller</div>
+          <div class="photo-card-role">Media Artist &amp; Sound Practitioner</div>
+        </div>
+      </a>
+
+      <a href="p_horst_hortner.html" target="_blank" class="photo-card">
+        <img src="Participant photos/Horst_Hortner.jpeg" alt="Horst Hörtner">
+        <div class="photo-card-overlay">
+          <div class="photo-card-country">AT — Austria</div>
+          <div class="photo-card-name">Horst Hörtner</div>
+          <div class="photo-card-role">Media Artist, Ars Electronica Senior Director</div>
+        </div>
+      </a>
+
+      <a href="p_nana_iashvili.html" target="_blank" class="photo-card">
+        <img src="Participant photos/Nana_Iashvili.jpeg" alt="Nana Iashvili">
+        <div class="photo-card-overlay">
+          <div class="photo-card-country">GE — Georgia</div>
+          <div class="photo-card-name">Nana Iashvili</div>
+          <div class="photo-card-role">Dean, Media Art Faculty — TSAA</div>
+        </div>
+      </a>
+
+      <a href="p_bostjan_kenda.html" target="_blank" class="photo-card">
+        <img src="Participant photos/Bostjan Botas Kenda.jpeg" alt="Bostjan Botas Kenda">
+        <div class="photo-card-overlay">
+          <div class="photo-card-country">SL — Slovenia</div>
+          <div class="photo-card-name">Bostjan Botas Kenda</div>
+          <div class="photo-card-role">Graphic Designer, University of Ljubljana</div>
+        </div>
+      </a>
+
+      <a href="p_reanne_leuning.html" target="_blank" class="photo-card">
+        <img src="Participant photos/Reanne_Leun.jpeg" alt="Reanne Leuning">
+        <div class="photo-card-overlay">
+          <div class="photo-card-country">AT — Austria</div>
+          <div class="photo-card-name">Reanne Leuning</div>
+          <div class="photo-card-role">Creative Industries Internationalization, Advantage Austria</div>
+        </div>
+      </a>
+
+      <a href="p_moya.html" target="_blank" class="photo-card">
+        <img src="Participant photos/MO-YA.jpeg" alt="MO:YA">
+        <div class="photo-card-overlay">
+          <div class="photo-card-country">AT — Austria</div>
+          <div class="photo-card-name">MO:YA</div>
+          <div class="photo-card-role">Immersive Media Studio — Mariacher &amp; Huber</div>
+        </div>
+      </a>
+
+      <a href="p_igor_petkovic.html" target="_blank" class="photo-card">
+        <img src="Participant photos/Igor_Petkovic.jpeg" alt="Igor Petkovic">
+        <div class="photo-card-overlay">
+          <div class="photo-card-country">AT — Austria</div>
+          <div class="photo-card-name">Igor Petkovic</div>
+          <div class="photo-card-role">Visual Artist &amp; Cultural Manager</div>
+        </div>
+      </a>
+
+      <a href="p_gernot_passath.html" target="_blank" class="photo-card">
+        <img src="Participant photos/gernot_passath.jpeg" alt="Gernot Passath">
+        <div class="photo-card-overlay">
+          <div class="photo-card-country">AT — Austria</div>
+          <div class="photo-card-name">Gernot Passath</div>
+          <div class="photo-card-role">Interdisciplinary Artist &amp; Muralist</div>
+        </div>
+      </a>
+
+      <a href="p_stella_rollig.html" target="_blank" class="photo-card">
+        <img src="Participant photos/Stella_Rollig.jpeg" alt="Stella Rollig">
+        <div class="photo-card-overlay">
+          <div class="photo-card-country">AT — Austria</div>
+          <div class="photo-card-name">Stella Rollig</div>
+          <div class="photo-card-role">General Director, Belvedere Museum Vienna</div>
+        </div>
+      </a>
+
+      <a href="p_karl_stocker.html" target="_blank" class="photo-card">
+        <img src="Participant photos/Karl_Stocker.jpeg" alt="Karl Stocker">
+        <div class="photo-card-overlay">
+          <div class="photo-card-country">AT — Austria</div>
+          <div class="photo-card-name">Karl Stocker</div>
+          <div class="photo-card-role">Design Historian &amp; Educator / Curator</div>
+        </div>
+      </a>
+
+      <a href="p_markus_tomaschitz.html" target="_blank" class="photo-card">
+        <img src="Participant photos/Markus Tomaschitz.jpeg" alt="Markus Tomaschitz">
+        <div class="photo-card-overlay">
+          <div class="photo-card-country">AT — Austria</div>
+          <div class="photo-card-name">Markus Tomaschitz</div>
+          <div class="photo-card-role">CHRO, AVL List GmbH</div>
+        </div>
+      </a>
+
+      <a href="p_lina_tonev.html" target="_blank" class="photo-card">
+        <img src="Participant photos/Lina_Tonev-1-1657x2048.jpeg" alt="Lina Tonev">
+        <div class="photo-card-overlay">
+          <div class="photo-card-country">BG — Bulgaria</div>
+          <div class="photo-card-name">Lina Tonev</div>
+          <div class="photo-card-role">Contemporary Artist &amp; Digital Arts PhD Candidate</div>
+        </div>
+      </a>
+
+      <a href="p_david_tschmuck.html" target="_blank" class="photo-card">
+        <img src="Participant photos/David_Tschmuck.jpeg" alt="David Angelo Tschmuck">
+        <div class="photo-card-overlay">
+          <div class="photo-card-country">AT — Austria</div>
+          <div class="photo-card-name">David Angelo Tschmuck</div>
+          <div class="photo-card-role">Media Artist &amp; Motion Designer</div>
+        </div>
+      </a>
+
+    </div>
+
+  </section>
+
+  <!-- REGISTER CTA -->
+  <section class="register-section">
+    <div class="register-label">// Attendance is required to make noise</div>
+    <h2 class="register-title">Join the Collision</h2>
+    <p class="register-sub">18 April 2026 — Rooms, 14 Merab Kostava Street</p>
+    <a href="https://forms.gle/rCoKhm8GVKXGrzKG6" target="_blank" class="btn-register-large">
+      <span>Register for the Event →</span>
+    </a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Hostile Noise</div>
+    <div class="footer-orgs">
+      <a href="https://adjaragroup.com/" target="_blank"><img src="Adjara-Group.logo.png" alt="Adjara Group"
+          class="footer-logo-adjara"></a>
+      <a href="https://www.facebook.com/GeoLabEdu" target="_blank"><img src="GeoLab.logo.png" alt="GeoLab"
+          class="footer-logo-geolab"></a>
+    </div>
+    <div class="footer-credit">
+      Curated by Sandro Asatiani / Karl Stocker<br>
+      Cover concept: Nino Esaiashvili<br>
+      Graphic design: Sandro Asatiani<br>
+      <div class="footer-contact">
+        <a href="mailto:education@geolab.edu.ge">education@geolab.edu.ge</a><br>
+        <a href="tel:+995577670404">+995 577 670 404</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
