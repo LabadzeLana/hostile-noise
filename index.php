@@ -1,245 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HOSTILE NOISE — Friction in Design, Art and Technology</title>
-  <link rel="icon" type="image/png" href="favicon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Barlow+Condensed:wght@300;400;600&display=swap"
-    rel="stylesheet">
-  
-  <!-- Social Sharing Meta Tags -->
-  <meta property="og:title" content="HOSTILE NOISE — Friction in Design, Art and Technology">
-  <meta property="og:description" content="An exploration of friction in Design, Art and Technology. 18 April 2026, Rooms, Tbilisi.">
-  <meta property="og:image" content="https://hostile-noise.geolab.edu.ge/og-image.png">
-  <meta property="og:type" content="">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="HOSTILE NOISE — Friction in Design, Art and Technology">
-  <meta name="twitter:description" content="An exploration of friction in Design, Art and Technology. 18 April 2026, Rooms, Tbilisi.">
-  <meta name="twitter:image" content="https://hostile-noise.geolab.edu.ge/og-image.png">
-  <style>
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    :root {
-      --black: #0a0a0a;
-      --white: #f0ede8;
-      --red: #f1ee75;
-      --gray: #2a2a2a;
-      --mid: #5a5a5a;
-      --light: #b0aa9f;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background: var(--black);
-      color: var(--white);
-      font-family: 'Space Mono', monospace;
-      overflow-x: hidden;
-      cursor: crosshair;
-      min-height: 100vh;
-    }
-
-    /* NOISE OVERLAY */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-      opacity: 0.04;
-      pointer-events: none;
-      z-index: 9999;
-    }
-
-    /* SCANLINES */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: repeating-linear-gradient(0deg,
-          transparent,
-          transparent 2px,
-          rgba(0, 0, 0, 0.03) 2px,
-          rgba(0, 0, 0, 0.03) 4px);
-      pointer-events: none;
-      z-index: 9998;
-    }
-
-    .nav {
-      position: relative;
-      z-index: 10;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 2rem 3rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .nav-logos {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-    }
-
-    .logo-adjara {
-      height: 54px;
-      width: auto;
-      filter: invert(1) brightness(0.7);
-      opacity: 0.85;
-      transition: opacity 0.2s ease;
-    }
-
-    .logo-adjara:hover {
-      opacity: 1;
-    }
-
-    .logo-geolab {
-      height: 54px;
-      width: auto;
-      filter: brightness(0.7);
-      opacity: 0.85;
-      transition: opacity 0.2s ease;
-    }
-
-    .logo-geolab:hover {
-      opacity: 1;
-    }
-
-    .logo-art {
-      height: 38px;
-      width: auto;
-      filter: brightness(0.7);
-      opacity: 0.85;
-      transition: opacity 0.2s ease;
-    }
-
-    .logo-art:hover {
-      opacity: 1;
-    }
-    /* ─── POPUP ─── */
-    .thank-you-popup-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(10, 10, 10, 0.9);
-      z-index: 100000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 2rem;
-      backdrop-filter: blur(4px);
-    }
-
-    .thank-you-popup {
-      background: var(--black);
-      border: 1px solid var(--red);
-      padding: 3rem;
-      max-width: 600px;
-      position: relative;
-      box-shadow: 0 0 20px rgba(241, 238, 117, 0.1);
-      animation: popupFade 0.5s ease-out;
-    }
-
-    @keyframes popupFade {
-      from { opacity: 0; transform: translateY(20px) scale(0.95); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    .thank-you-close {
-      position: absolute;
-      top: 1.5rem;
-      right: 1.5rem;
-      background: none;
-      border: none;
-      color: var(--red);
-      font-family: 'Space Mono', monospace;
-      font-size: 1rem;
-      cursor: crosshair;
-      transition: color 0.2s ease, transform 0.2s ease;
-      letter-spacing: 0.1em;
-    }
-
-    .thank-you-close:hover {
-      color: var(--white);
-      transform: scale(1.1);
-    }
-
-    .thank-you-title {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.85rem;
-      letter-spacing: 0.4em;
-      color: var(--red);
-      margin-bottom: 1.5rem;
-      text-transform: uppercase;
-    }
-
-    .thank-you-content {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.3rem;
-      color: var(--light);
-      line-height: 1.7;
-    }
-
-    .thank-you-content p {
-      margin-bottom: 1.2rem;
-    }
-
-    .thank-you-content p:last-child {
-      margin-bottom: 0;
-    }
-
-    .thank-you-content strong {
-      color: var(--white);
-      font-weight: 600;
-      letter-spacing: 0.05em;
-    }
-  </style>
-</head>
-
-<body>
-  
-  <!-- THANK YOU POPUP -->
-  <div class="thank-you-popup-overlay" id="thankYouPopup">
-    <div class="thank-you-popup">
-      <button class="thank-you-close" onclick="closeThankYouPopup()">[CLOSE]</button>
-      <div class="thank-you-title">// Message Logs</div>
-      <div class="thank-you-content">
-        <p><strong>We appreciate your presence!</strong></p>
-        <p>A huge thank you to everyone who joined us. To our guests, our international participants who traveled from across the globe, and the supporters who fueled this journey. Your energy made <strong>HOSTILE NOISE</strong> real.</p>
-        <p>See you at the next intersection of art, design and technology!</p>
-      </div>
-    </div>
-  </div>
-  
-  <script>
-    function closeThankYouPopup() {
-      document.getElementById('thankYouPopup').style.display = 'none';
-    }
-  </script>
-  
-  <nav class="nav">
-    <div class="nav-logos">
-      <a href="https://roomshotels.com/" target="_blank"><img src="Rooms_Hotels_Logo-01.png" alt="Rooms Hotels" class="logo-adjara"></a>
-      <a href="https://www.facebook.com/GeoLabEdu" target="_blank"><img src="GeoLab.logo.png" alt="GeoLab" class="logo-geolab"></a>
-      <a href="https://art.edu.ge/" target="_blank"><img src="art.png" alt="Art" class="logo-art"></a>
-    </div>
-    <div class="nav-date">
-      <span>18 April 2026</span>
-      Rooms, 14 Merab Kostava St.<br>
-      Full-Day Programme
-    </div>
-  </nav>
-
+<?php
+$is_home = true;
+include 'header.php';
+?>
 <style>
 
     *,
@@ -439,6 +201,7 @@
     .footer-logo-art:hover {
       opacity: 0.9;
     }
+
 
     .footer-orgs {
       display: flex;
@@ -658,13 +421,6 @@
       60% { transform: translate(3px, 3px); }
       80% { transform: translate(3px, -3px); }
       100% { transform: translate(0); }
-    }
-
-    .hero-gallery-btn:hover {
-      transform: scale(1.05) rotate(-1deg);
-      background: var(--white);
-      color: var(--black);
-      box-shadow: 0 0 30px rgba(241, 238, 117, 0.6);
     }
 
     @keyframes heroGalleryPulse {
@@ -1315,8 +1071,6 @@
       </svg>
     </div>
 
-    
-
     <div class="hero-content">
       <div class="hero-label">Friction in Design, Art and Technology</div>
       <h1 class="hero-title">
@@ -1324,7 +1078,7 @@
         <span class="glitch" data-text="NOISE">NOISE</span>
       </h1>
       <p class="hero-subtitle">An Interdisciplinary Festival of Collision</p>
-      <a href="gallery/" class="hero-gallery-btn" data-text="Hostile Noise Visual Archive">Hostile Noise Visual Archive</a>
+      <a href="<?php echo page_url('gallery/'); ?>" class="hero-gallery-btn" data-text="Hostile Noise Visual Archive">Hostile Noise Visual Archive</a>
     </div>
 
     <div class="hero-bottom">
@@ -1337,7 +1091,7 @@
         Rooms, 14 Merab Kostava Street
       </div>
       <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap;">
-        <a href="programme" class="btn-register">
+        <a href="<?php echo page_url('programme'); ?>" class="btn-register">
           <span>View Programme</span>
         </a>
         <a href="https://forms.gle/rCoKhm8GVKXGrzKG6" target="_blank" class="btn-register">
@@ -1346,8 +1100,6 @@
       </div>
     </div>
   </section>
-
-
 
   <!-- CONCEPT -->
   <section class="concept">
@@ -1389,7 +1141,7 @@
 
   <section class="media-partner">
     <a href="https://designmagazine.pt/" target="_blank" rel="noopener noreferrer" class="media-partner-logo-link">
-      <img src="DesMag_logo.svg" alt="Design Magazine logo" class="media-partner-logo">
+      <img src="<?php echo asset_url('DesMag_logo.svg'); ?>" alt="Design Magazine logo" class="media-partner-logo">
     </a>
     <div class="media-partner-content">
       <div class="media-partner-kicker">Media Partner</div>
@@ -1403,14 +1155,14 @@
   <section class="participants-section">
     <div class="participants-header">
       <h2 class="section-title">Participants</h2>
-      <div class="participants-count">// 20 contributors</div>
+      <div class="participants-count">// 19 contributors</div>
     </div>
 
     <!-- PHOTO GRID -->
     <div class="photo-grid">
 
-      <a href="sandro-asatiani/" class="photo-card">
-        <img src="Participant%20photos/SandroAsatiani.jpeg" alt="Sandro Asatiani">
+      <a href="<?php echo page_url('sandro-asatiani/'); ?>" class="photo-card">
+        <img src="<?php echo asset_url('Participant photos/SandroAsatiani.jpeg'); ?>" alt="Sandro Asatiani">
         <div class="photo-card-overlay">
           <div class="photo-card-country">GE — Georgia</div>
           <div class="photo-card-name">Sandro Asatiani</div>
@@ -1418,8 +1170,8 @@
         </div>
       </a>
 
-      <a href="tomislav-bobinec/" class="photo-card">
-        <img src="Participant%20photos/Tomislav.jpeg" alt="Tomislav Bobinec">
+      <a href="<?php echo page_url('tomislav-bobinec/'); ?>" class="photo-card">
+        <img src="<?php echo asset_url('Participant photos/Tomislav.jpeg'); ?>" alt="Tomislav Bobinec">
         <div class="photo-card-overlay">
           <div class="photo-card-country">AT — Austria</div>
           <div class="photo-card-name">Tomislav Bobinec</div>
@@ -1427,9 +1179,8 @@
         </div>
       </a>
 
-
-      <a href="katharina-diem/" class="photo-card">
-        <img src="Participant%20photos/Katharina.jpeg" alt="Katharina Diem">
+      <a href="<?php echo page_url('katharina-diem/'); ?>" class="photo-card">
+        <img src="<?php echo asset_url('Participant photos/Katharina.jpeg'); ?>" alt="Katharina Diem">
         <div class="photo-card-overlay">
           <div class="photo-card-country">AT — Austria</div>
           <div class="photo-card-name">Katharina Diem</div>
@@ -1437,8 +1188,8 @@
         </div>
       </a>
 
-      <a href="deta/" class="photo-card">
-        <img src="Participant%20photos/Deta.jpeg" alt="Deta">
+      <a href="<?php echo page_url('deta/'); ?>" class="photo-card">
+        <img src="<?php echo asset_url('Participant photos/Deta.jpeg'); ?>" alt="Deta">
         <div class="photo-card-overlay">
           <div class="photo-card-country">AT — Austria</div>
           <div class="photo-card-name">Deta</div>
@@ -1446,8 +1197,8 @@
         </div>
       </a>
 
-      <a href="nino-esaiashvili/" class="photo-card">
-        <img src="Participant%20photos/NinoEsiashvili.jpeg" alt="Nino Esaiashvili">
+      <a href="<?php echo page_url('nino-esaiashvili/'); ?>" class="photo-card">
+        <img src="<?php echo asset_url('Participant photos/NinoEsiashvili.jpeg'); ?>" alt="Nino Esaiashvili">
         <div class="photo-card-overlay">
           <div class="photo-card-country">GE — Georgia</div>
           <div class="photo-card-name">Nino Esaiashvili</div>
@@ -1455,8 +1206,8 @@
         </div>
       </a>
 
-      <a href="feelipa/" class="photo-card">
-        <img src="Participant%20photos/Feelipa.jpeg" alt="Feelipa">
+      <a href="<?php echo page_url('feelipa/'); ?>" class="photo-card">
+        <img src="<?php echo asset_url('Participant photos/Feelipa.jpeg'); ?>" alt="Feelipa">
         <div class="photo-card-overlay">
           <div class="photo-card-country">AT — Austria</div>
           <div class="photo-card-name">Feelipa</div>
@@ -1464,8 +1215,8 @@
         </div>
       </a>
 
-      <a href="gagosh/" class="photo-card">
-        <img src="Participant%20photos/Gagosh_00.jpeg" alt="Gagosh Streetart">
+      <a href="<?php echo page_url('gagosh/'); ?>" class="photo-card">
+        <img src="<?php echo asset_url('Participant photos/Gagosh_00.jpeg'); ?>" alt="Gagosh Streetart">
         <div class="photo-card-overlay">
           <div class="photo-card-country">GE — Georgia</div>
           <div class="photo-card-name">Gagosh Streetart</div>
@@ -1473,8 +1224,8 @@
         </div>
       </a>
 
-      <a href="maria-vidal/" class="photo-card">
-        <img src="Participant%20photos/mariagomar_muro_paterna.jpeg" alt="Maria Amparo Gomar Vidal">
+      <a href="<?php echo page_url('maria-vidal/'); ?>" class="photo-card">
+        <img src="<?php echo asset_url('Participant photos/mariagomar_muro_paterna.jpeg'); ?>" alt="Maria Amparo Gomar Vidal">
         <div class="photo-card-overlay">
           <div class="photo-card-country">ES — Spain</div>
           <div class="photo-card-name">Maria Amparo Gomar Vidal</div>
@@ -1482,8 +1233,8 @@
         </div>
       </a>
 
-      <a href="schubertbarbie/" class="photo-card">
-        <img src="Participant%20photos/Kristina_Gorke.jpeg" alt="Schubertbarbie">
+      <a href="<?php echo page_url('schubertbarbie/'); ?>" class="photo-card">
+        <img src="<?php echo asset_url('Participant photos/Kristina_Gorke.jpeg'); ?>" alt="Schubertbarbie">
         <div class="photo-card-overlay">
           <div class="photo-card-country">AT — Austria</div>
           <div class="photo-card-name">Schubertbarbie</div>
@@ -1491,8 +1242,8 @@
         </div>
       </a>
 
-      <a href="bernd-gutmannsbauer/" class="photo-card">
-        <img src="Participant%20photos/Bernd%20Gutmannsbauer.jpeg" alt="Bernd Gutmannsbauer">
+      <a href="<?php echo page_url('bernd-gutmannsbauer/'); ?>" class="photo-card">
+        <img src="<?php echo asset_url('Participant photos/Bernd Gutmannsbauer.jpeg'); ?>" alt="Bernd Gutmannsbauer">
         <div class="photo-card-overlay">
           <div class="photo-card-country">AT — Austria</div>
           <div class="photo-card-name">Dr. Bernd Gutmannsbauer</div>
@@ -1502,8 +1253,8 @@
 
 
 
-      <a href="bostjan-kenda/" class="photo-card">
-        <img src="Participant%20photos/Bostjan%20Botas%20Kenda.jpeg" alt="Bostjan Botas Kenda">
+      <a href="<?php echo page_url('bostjan-kenda/'); ?>" class="photo-card">
+        <img src="<?php echo asset_url('Participant photos/Bostjan Botas Kenda.jpeg'); ?>" alt="Bostjan Botas Kenda">
         <div class="photo-card-overlay">
           <div class="photo-card-country">SL — Slovenia</div>
           <div class="photo-card-name">Bostjan Botas Kenda</div>
@@ -1511,8 +1262,8 @@
         </div>
       </a>
 
-      <a href="reanne-leuning/" class="photo-card">
-        <img src="Participant%20photos/Reanne_Leun.jpeg" alt="Reanne Leuning">
+      <a href="<?php echo page_url('reanne-leuning/'); ?>" class="photo-card">
+        <img src="<?php echo asset_url('Participant photos/Reanne_Leun.jpeg'); ?>" alt="Reanne Leuning">
         <div class="photo-card-overlay">
           <div class="photo-card-country">AT — Austria</div>
           <div class="photo-card-name">Reanne Leuning</div>
@@ -1520,8 +1271,8 @@
         </div>
       </a>
 
-      <a href="moya/" class="photo-card">
-        <img src="Participant%20photos/MO-YA.jpeg" alt="MO:YA">
+      <a href="<?php echo page_url('moya/'); ?>" class="photo-card">
+        <img src="<?php echo asset_url('Participant photos/MO-YA.jpeg'); ?>" alt="MO:YA">
         <div class="photo-card-overlay">
           <div class="photo-card-country">AT — Austria</div>
           <div class="photo-card-name">MO:YA</div>
@@ -1529,8 +1280,8 @@
         </div>
       </a>
 
-      <a href="igor-petkovic/" class="photo-card">
-        <img src="Participant%20photos/Igor_Petkovic.jpeg" alt="Igor Petkovic">
+      <a href="<?php echo page_url('igor-petkovic/'); ?>" class="photo-card">
+        <img src="<?php echo asset_url('Participant photos/Igor_Petkovic.jpeg'); ?>" alt="Igor Petkovic">
         <div class="photo-card-overlay">
           <div class="photo-card-country">AT — Austria</div>
           <div class="photo-card-name">Igor Petkovic</div>
@@ -1538,8 +1289,8 @@
         </div>
       </a>
 
-      <a href="gernot-passath/" class="photo-card">
-        <img src="Participant%20photos/gernot_passath.jpeg" alt="Gernot Passath">
+      <a href="<?php echo page_url('gernot-passath/'); ?>" class="photo-card">
+        <img src="<?php echo asset_url('Participant photos/gernot_passath.jpeg'); ?>" alt="Gernot Passath">
         <div class="photo-card-overlay">
           <div class="photo-card-country">AT — Austria</div>
           <div class="photo-card-name">Gernot Passath</div>
@@ -1547,8 +1298,8 @@
         </div>
       </a>
 
-      <a href="stella-rollig/" class="photo-card">
-        <img src="Participant%20photos/Stella_Rollig.jpeg" alt="Stella Rollig">
+      <a href="<?php echo page_url('stella-rollig/'); ?>" class="photo-card">
+        <img src="<?php echo asset_url('Participant photos/Stella_Rollig.jpeg'); ?>" alt="Stella Rollig">
         <div class="photo-card-overlay">
           <div class="photo-card-country">AT — Austria</div>
           <div class="photo-card-name">Stella Rollig</div>
@@ -1556,8 +1307,8 @@
         </div>
       </a>
 
-      <a href="karl-stocker/" class="photo-card">
-        <img src="Participant%20photos/Karl_Stocker.jpeg" alt="Karl Stocker">
+      <a href="<?php echo page_url('karl-stocker/'); ?>" class="photo-card">
+        <img src="<?php echo asset_url('Participant photos/Karl_Stocker.jpeg'); ?>" alt="Karl Stocker">
         <div class="photo-card-overlay">
           <div class="photo-card-country">AT — Austria</div>
           <div class="photo-card-name">Karl Stocker</div>
@@ -1567,8 +1318,8 @@
 
 
 
-      <a href="lina-tonev/" class="photo-card">
-        <img src="Participant%20photos/Lina_Tonev-1-1657x2048.jpeg" alt="Lina Tonev">
+      <a href="<?php echo page_url('lina-tonev/'); ?>" class="photo-card">
+        <img src="<?php echo asset_url('Participant photos/Lina_Tonev-1-1657x2048.jpeg'); ?>" alt="Lina Tonev">
         <div class="photo-card-overlay">
           <div class="photo-card-country">BG — Bulgaria</div>
           <div class="photo-card-name">Lina Tonev</div>
@@ -1576,8 +1327,8 @@
         </div>
       </a>
 
-      <a href="david-tschmuck/" class="photo-card">
-        <img src="Participant%20photos/David_Tschmuck.jpeg" alt="David Angelo Tschmuck">
+      <a href="<?php echo page_url('david-tschmuck/'); ?>" class="photo-card">
+        <img src="<?php echo asset_url('Participant photos/David_Tschmuck.jpeg'); ?>" alt="David Angelo Tschmuck">
         <div class="photo-card-overlay">
           <div class="photo-card-country">AT — Austria</div>
           <div class="photo-card-name">David Angelo Tschmuck</div>
@@ -1600,25 +1351,5 @@
   </section>
 
   <!-- FOOTER -->
-  <footer>
-    <div class="footer-logo-text">Hostile Noise</div>
-    <div class="footer-orgs">
-      <a href="https://roomshotels.com/" target="_blank"><img src="Rooms_Hotels_Logo-01.png" alt="Rooms Hotels"
-          class="footer-logo-adjara"></a>
-      <a href="https://www.facebook.com/GeoLabEdu" target="_blank"><img src="GeoLab.logo.png" alt="GeoLab"
-          class="footer-logo-geolab"></a>
-      <a href="https://art.edu.ge/" target="_blank"><img src="art.png" alt="Art" class="footer-logo-art"></a>
-    </div>
-    <div class="footer-credit">
-      Curated by Sandro Asatiani / Karl Stocker<br>
-      Cover concept: Nino Esaiashvili<br>
-      Graphic design: Sandro Asatiani<br>
-      <div class="footer-contact">
-        <a href="mailto:education@geolab.edu.ge">education@geolab.edu.ge</a><br>
-        <a href="tel:+995577670404">+995 577 670 404</a>
-      </div>
-    </div>
-  </footer>
-
-</body>
-</html>
+  
+<?php include 'footer.php'; ?>

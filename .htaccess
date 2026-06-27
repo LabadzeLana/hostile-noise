@@ -1,0 +1,40 @@
+Options +FollowSymLinks -MultiViews
+RewriteEngine On
+RewriteBase /
+
+# Ensure index.php is the default directory index
+DirectoryIndex index.php index.html
+
+# Legacy URL Redirects
+Redirect 301 /index.html /
+Redirect 301 /p_astrid_drechsler.html /deta
+Redirect 301 /p_bernd_gutmannsbauer.html /bernd-gutmannsbauer
+Redirect 301 /p_bostjan_kenda.html /bostjan-kenda
+Redirect 301 /p_david_tschmuck.html /david-tschmuck
+Redirect 301 /p_feelipa.html /feelipa
+Redirect 301 /p_gagosh.html /gagosh
+Redirect 301 /p_gernot_passath.html /gernot-passath
+Redirect 301 /p_horst_hortner.html /horst-hortner
+Redirect 301 /p_igor_petkovic.html /igor-petkovic
+Redirect 301 /p_karl_stocker.html /karl-stocker
+Redirect 301 /p_katharina_diem.html /katharina-diem
+Redirect 301 /p_kristina_gorke.html /schubertbarbie
+Redirect 301 /p_lina_tonev.html /lina-tonev
+Redirect 301 /p_maria_vidal.html /maria-vidal
+Redirect 301 /p_markus_tomaschitz.html /markus-tomaschitz
+Redirect 301 /p_moya.html /moya
+Redirect 301 /p_nino_esaiashvili.html /nino-esaiashvili
+Redirect 301 /p_reanne_leuning.html /reanne-leuning
+Redirect 301 /p_reni_hofmuller.html /reni-hofmuller
+Redirect 301 /p_sandro_asatiani.html /sandro-asatiani
+Redirect 301 /p_stella_rollig.html /stella-rollig
+Redirect 301 /p_tomislav_bobinec.html /tomislav-bobinec
+
+# Friendly URLs (remove .php extension internally)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([^.]+)$ $1.php [NC,L]
+
+# Redirect .php to extensionless version externally
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s([^.]+)\.php [NC]
+RewriteRule ^ %1 [R=301,L]
